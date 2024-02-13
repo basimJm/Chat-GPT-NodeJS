@@ -12,6 +12,6 @@ const { messageValidator } = require("../utils/validator/messageValidator");
 
 router.route("/:userID").post(protect, messageValidator, sendMessage);
 
-router.route("/").post(freeTrail, messageValidator, sendFreeTrailMessage);
+router.route("/").post(messageValidator, freeTrail, sendFreeTrailMessage);
 
 module.exports = router;

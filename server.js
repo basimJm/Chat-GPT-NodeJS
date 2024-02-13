@@ -31,6 +31,9 @@ if (process.env.NODE_ENV === "development") {
 //inside middelWare parse json
 app.use(express.json());
 
+//for deploy
+app.set("trust proxy", true);
+
 app.use("/api/v1/text-correction", userRoute, messageRoute);
 
 //Handle unhandled route
