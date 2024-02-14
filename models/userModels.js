@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema(
         ref: "Messages",
       },
     ],
+    sessions: [{ type: mongoose.Schema.ObjectId, ref: "session" }],
 
     active: { type: Boolean, default: true },
   },

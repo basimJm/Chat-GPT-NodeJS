@@ -7,8 +7,10 @@ const dbConnection = require("./config/database");
 const ApiError = require("./utils/apiError");
 const globalError = require("./middleware/errorMiddleware");
 
+// import routs
 const userRoute = require("./routs/userRoute");
 const messageRoute = require("./routs/messageRoute");
+const sessionRoute = require("./routs/sessionRouts");
 
 //get middleware path
 dotenv.config({ path: "config.env" });
@@ -35,6 +37,7 @@ app.use(express.json());
 app.set("trust proxy", true);
 
 app.use("/api/v1/text-correction", userRoute, messageRoute);
+app.use("/api/v1/session/", sessionRoute);
 
 //Handle unhandled route
 app.all("*", (req, res, next) => {
