@@ -19,6 +19,6 @@ router
   .post(uploadUserImage, resizeImage, createUserValidator, createUser);
 router.route("/signin").get(login);
 
-router.route("/validToken").get(protect, validToken);
+router.route("/validToken").get(validToken);
 
 module.exports = router;

@@ -87,7 +87,7 @@ exports.validToken = asyncHandler(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  const user = await userModel.findById(decoded.id);
+  const user = await userModel.findById(decoded.userId);
 
   if (!user) {
     return next(new ApiError("Invalid Token! Please Login Again.", 401));
