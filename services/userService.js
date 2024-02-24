@@ -87,13 +87,16 @@ exports.validToken = asyncHandler(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  const user = await userModel.findById(decoded.userId);
+  const user = await userModel.findById(decoded.userId).populate({
+    path: "sessions",
+    populate: { path: "chatHistory", model: "chats" },
+  });
 
   if (!user) {
     return next(new ApiError("Invalid Token! Please Login Again.", 401));
   }
 
-  res.status(200).json({ json: user });
+  res.status(200).json({ status: 200, user_data: user, token: token });
 });
 
 // @desc   make sure the user is logged in
