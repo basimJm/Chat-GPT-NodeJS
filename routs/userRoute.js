@@ -7,6 +7,8 @@ const {
   resizeImage,
   createUser,
   login,
+  validToken,
+  protect,
 } = require("../services/userService");
 
 //validate
@@ -16,5 +18,7 @@ router
   .route("/signup")
   .post(uploadUserImage, resizeImage, createUserValidator, createUser);
 router.route("/signin").get(login);
+
+router.route("/validToken").get(protect, validToken);
 
 module.exports = router;

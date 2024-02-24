@@ -32,16 +32,9 @@ const userSchema = new mongoose.Schema(
       required: [true, "password required"],
       minlength: [6, "Too short password"],
     },
-
-    messages: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "Messages",
-      },
-    ],
     sessions: [{ type: mongoose.Schema.ObjectId, ref: "session" }],
 
-    active: { type: Boolean, default: true },
+    stayLogin: { type: Boolean, default: true },
   },
   {
     timestamps: true,

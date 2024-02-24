@@ -78,6 +78,27 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.status(200).json({ status: 200, user: user, token: token });
 });
 
+/**
+ * this function to get user inn splash screen in mobile application
+ */
+exports.validToken = asyncHandler(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const user = await userModel.findById(decoded.id);
+
+  if (!user) {
+    return next(new ApiError("Invalid Token! Please Login Again.", 401));
+  }
+
+  res.status(200).json({ json: user });
+});
+
 // @desc   make sure the user is logged in
 exports.protect = asyncHandler(async (req, res, next) => {
   // 1) Check if token exist, if exist get
