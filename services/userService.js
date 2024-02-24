@@ -60,13 +60,10 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 
 //sign in with GET Method
 exports.login = asyncHandler(async (req, res, next) => {
-  const user = await userModel
-    .findOne({ email: req.body.email })
-    .populate({ path: "messages" })
-    .populate({
-      path: "sessions",
-      populate: { path: "chatHistory", model: "chats" },
-    }); //, select: "date , type , reading-_id"
+  const user = await userModel.findOne({ email: req.body.email }).populate({
+    path: "sessions",
+    populate: { path: "chatHistory", model: "chats" },
+  }); //, select: "date , type , reading-_id"
 
   if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
     return next(new ApiError("invalid email or password", 401));
