@@ -55,7 +55,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
   const saveUser = await userData.save();
   const token = createToken(saveUser._id);
 
-  res.status(201).json({ status: 201, data: saveUser, token: token });
+  res.status(201).json({ status: 201, user_data: saveUser, token: token });
 });
 
 //sign in with GET Method
@@ -72,7 +72,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   //delete password from resaponse
   delete user._doc.password;
-  res.status(200).json({ status: 200, user: user, token: token });
+  res.status(200).json({ status: 200, user_data: user, token: token });
 });
 
 /**
