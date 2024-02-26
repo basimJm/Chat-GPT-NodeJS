@@ -17,7 +17,7 @@ const { createUserValidator } = require("../utils/validator/userValidator");
 router
   .route("/signup")
   .post(uploadUserImage, resizeImage, createUserValidator, createUser);
-router.route("/signin").get(login);
+router.route("/signin").post(login);
 
 router.route("/validToken").get(validToken);
 
