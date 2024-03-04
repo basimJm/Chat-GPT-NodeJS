@@ -5,9 +5,11 @@ const asyncHandler = require("express-async-handler");
 const chattingModel = require("../models/chattingModel");
 
 const userModel = require("../models/userModels");
+const sessionModel = require("../models/sessionModel");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const path = require("path");
+const ApiError = require("../utils/apiError");
 dotenv.config({ path: "config.env" });
 
 const openai = new OpenAI({
@@ -108,4 +110,22 @@ exports.createConversationWithGPT = asyncHandler(async (req, res) => {
   await session.save();
 
   res.status(200).json({ chat: newChat });
+});
+
+exports.getUserChats = asyncHandler(async (req, res, next) => {
+  const { userID, sessionID } = req.params;
+  const user = await userModel.findById(userID);
+  if (!user) {
+    return next(new ApiError("no user found"), 404);
+  }
+  // const sessions = await sessionModel.find({ _id: { $in: user.sessions } });
+
+  const session = await sessionModel
+    .findById(sessionID)
+    .populate("chatHistory");
+  if (!session) {
+    return next(new ApiError("no session found"), 404);
+  }
+
+  res.status(200).json({ chatHistory: session });
 });

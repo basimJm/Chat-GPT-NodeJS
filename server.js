@@ -11,6 +11,7 @@ const globalError = require("./middleware/errorMiddleware");
 const userRoute = require("./routs/userRoute");
 const messageRoute = require("./routs/messageRoute");
 const sessionRoute = require("./routs/sessionRouts");
+const chatHistory = require("./routs/chattingRoute");
 
 //get middleware path
 dotenv.config({ path: "config.env" });
@@ -38,6 +39,7 @@ app.set("trust proxy", true);
 
 app.use("/api/v1/text-correction", userRoute, messageRoute);
 app.use("/api/v1/session/", sessionRoute);
+app.use("/api/v1/chat-history", chatHistory);
 
 //Handle unhandled route
 app.all("*", (req, res, next) => {
