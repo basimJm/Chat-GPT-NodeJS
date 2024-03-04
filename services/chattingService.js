@@ -127,5 +127,5 @@ exports.getUserChats = asyncHandler(async (req, res, next) => {
     return next(new ApiError("no session found"), 404);
   }
 
-  res.status(200).json({ chatHistory: session });
+  res.status(200).json({ sessions: session });
 });
